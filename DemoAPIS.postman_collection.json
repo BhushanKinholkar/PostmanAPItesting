@@ -38,7 +38,7 @@
 							"    \r",
 							"})\r",
 							"pm.test(\"Verify the first_name\", function() {\r",
-							"    pm.expect(jsonData.data.first_name).to.eql(\"Janet\")\r",
+							"    pm.expect(jsonData.data.first_name).to.eql(\"Jane\")\r",
 							"    \r",
 							"})\r",
 							"\r",
