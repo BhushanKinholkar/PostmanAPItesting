@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "c3e9d598-9af6-4fa1-ba19-34173f5d4d09",
+		"name": "DemoAPIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Send request api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Validate the status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.test(\"Verify the firstname\", function() {\r",
+							"    pm.expect(jsonData.data.first_name).to.be.a(\"String\")\r",
+							"    \r",
+							"})\r",
+							"pm.test(\"Verify the Object\", function() {\r",
+							"    pm.expect(jsonData).to.be.an(\"object\"); \r",
+							"    \r",
+							"})\r",
+							"pm.test(\"Verify the email\", function() {\r",
+							"    pm.expect(jsonData.data.email).to.be.a(\"String\"); \r",
+							"    \r",
+							"})\r",
+							"pm.test(\"Verify the first_name\", function() {\r",
+							"    pm.expect(jsonData.data.first_name).to.eql(\"Janet\")\r",
+							"    \r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all user api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify the page count\", function(){\r",
+							"    pm.expect(jsonData.total_pages).to.eql(2)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify the email id\", () => \r",
+							"{\r",
+							"    const dataname = jsonData.data\r",
+							"    pm.expect(dataname[0].email).to.eql(\"michael.lawson@reqres.in\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the first name\", () => \r",
+							"{\r",
+							"    const dataname = jsonData.data\r",
+							"    pm.expect(dataname[0].first_name).to.eql(\"Michael\")\r",
+							"});\r",
+							"pm.test(\"Verify the first name in second object\", () => \r",
+							"{\r",
+							"    const dataname = jsonData.data\r",
+							"    pm.expect(dataname[1].first_name).to.eql(\"Lindsay\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post call api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST request\", () => {\r",
+							"  pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the status as created\", () => {\r",
+							"  pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is present\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type header is application/json\", () => {\r",
+							"  pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json; charset=utf-8');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"const jsonData = pm.response.json()\r",
+							"const value = pm.response.json()\r",
+							"const id_value = value.id\r",
+							"console.log(id_value) \r",
+							"\r",
+							"pm.test(\"Verify the name\", function(){\r",
+							"\r",
+							"    console.log(jsonData)\r",
+							"    pm.expect(jsonData.name).to.eql(\"Bhushan K\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify the string\", function()\r",
+							"{\r",
+							"    pm.expect(jsonData.job).to.be.a(\"string\")\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify the number\", function()\r",
+							"{\r",
+							"    pm.expect(jsonData.id).to.eql(id_value)\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify the object\", function(){\r",
+							"\r",
+							"    pm.expect(jsonData).to.be.an(\"object\")\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Bhushan K\",\r\n    \"job\": \"leader\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJqblNlaVJ0MG80MUM5anNzQUVRZms4WFQwZXdnZzI3dUxKYzhnbEdYeDBzIn0.eyJleHAiOjE2NDc4NjUyMzUsImlhdCI6MTY0Nzg2NDkzNSwiYXV0aF90aW1lIjoxNjQ3ODY0OTI2LCJqdGkiOiI4NGZiMDVlOC03ZTQxLTQ2Y2MtYTVlMy1kZTYwZDExMDFmODIiLCJpc3MiOiJodHRwczovL2FzY3ZidmlzMDAxODU4NS5yYS1pbnQuY29tOjkwNDMvYXV0aC9yZWFsbXMvU2VjdXJpdHkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZDY3NGE5MWQtODRmNy00MjE0LWI0NjktOTIyMTYxZDhjNTY4IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZmFjdG9yeXRhbGstYW5hbHl0aWNzLWRhdGF2aWV3Iiwibm9uY2UiOiI1ZWE5YjQ3MS00MjY0LTQ5ZDgtODNlZi00MzdmOTBhMDRkMzAiLCJzZXNzaW9uX3N0YXRlIjoiMmNlNWI1MjAtZWMzMi00Yjc0LTlkOTAtZjI3ZTg3ZDc4MThkIiwiYWNyIjoiMCIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL2FzY3ZidmlzMDAxODU4NS5yYS1pbnQuY29tIiwiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1zZWN1cml0eSIsIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJmYWN0b3J5dGFsay1hbmFseXRpY3MtZGF0YXZpZXciOnsicm9sZXMiOlsidXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IlVzZXIgVGVzdDEiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyMSIsImdpdmVuX25hbWUiOiJVc2VyIiwiZmFtaWx5X25hbWUiOiJUZXN0MSIsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIn0.U4yG7r8pOSKzVVa5v-Voo4Bz7KXwLqCqKu-BIU1QiwdfApyHcW5cLby0X-xM-1kMapB9RA_H3IQA3h0YwSLNdxIo1f3WW1egoWlKhVOIlhza-RMv7LluONRP7xTjJaAiEAvjTKgN5y2IBjfGsrPkzQqoiaXtho0cuw9rMz9LrVY1bY0fCrkEx9w_48ncsjqmDc6ofIz64G_ZA5Sd2UhJSCb29-UmO5GD74PNUQi4OYbJF8plyO0i9vfNP66juKRKgZuI9rjvMJ6kmRxsmsF1o2RU3kniEAIvZD2c3eaOW0dkTvaBR7URDHz47_a8tm3QLv4lBhyw_KiOULu9Cxk59A",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
